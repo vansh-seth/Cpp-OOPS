@@ -1,3 +1,4 @@
+## Before code implementation please refer to my notes
 # C++ Programming Experiments Repository
 
 This repository contains C++ programs for various experiments related to object-oriented programming, classes, inheritance, templates, file handling, operator overloading, exception handling, and more.
