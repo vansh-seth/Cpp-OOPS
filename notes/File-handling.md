@@ -426,3 +426,32 @@ To move the pointer relative to the current location, use `ios::cur`.
 // Moves the file get pointer n bytes forward
 inClientFile.seekg(n, ios::cur);
 ```
+### close a file:
+It is done by FilePointer.close().
+
+![image](https://github.com/vansh-seth/Cpp-OOPS/assets/111755254/d57a1964-4a61-4d74-8498-dd6727516c06)
+
+## Special operations in a File
+- There are few important functions to be used with file streams like:
+- `tellp()` - It tells the current position of the put pointer. Syntax: `filepointer.tellp()`
+- `tellg()` - It tells the current position of the get pointer.Syntax: `filepointer.tellg()`
+- `seekp()` - It moves the put pointer to mentioned location.Syntax: `filepointer.seekp(no of bytes,reference mode)`
+- `seekg()` - It moves get pointer(input) to a specified location.Syntax: `filepointer.seekg((no of bytes,reference point)`
+- `put()` - It writes a single character to file.
+- `get()` - It reads a single character from file.
+- Note: For seekp and seekg three reference points are passed:
+`ios::beg` - beginning of the file
+`ios::cur` - current position in the file
+`ios::end` - end of the file
+
+## program to show importance of tellp, tellg, seekp and seekg:
+
+![image](https://github.com/vansh-seth/Cpp-OOPS/assets/111755254/d91fd69d-6145-4318-b21b-95a13659ac79)
+![image](https://github.com/vansh-seth/Cpp-OOPS/assets/111755254/db057168-1469-4f11-bb11-cdc5ba822f0f)
+## Output:
+```
+New file created File Pointer Position is 13
+ As per tellp File Pointer Position is 12
+As per tellg File Pointer Position is 5
+As per tellg File Pointer Position is 6
+```
