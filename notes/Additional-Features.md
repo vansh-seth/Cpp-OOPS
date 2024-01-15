@@ -552,6 +552,184 @@ return 0;
 
 ## The std Namespace
 - Standard C++ defines its entire library in its namespace called `std`.<br />
-`using namespace std;`
-This brings the `std` namespace to be brought into the current namespace, which gives you direct access to the
-entire C++ library without having to qualify each one with `std::`.
+`using namespace std;`<br />
+This brings the `std` namespace to be brought into the current namespace, which gives you direct access to the entire C++ library without having to qualify each one with `std::`.
+- If there are limited references to C++ library, explicitly qualify each name with `std::`
+```cpp
+#include <iostream>
+int main () {
+int val;
+std::cout << "Enter a number: ";
+std::cin >> val;
+std::cout << "This is your number: ";
+std::cout << std::hex << val;
+return 0;
+}
+// Bring only a few names into the global namespace.
+#include <iostream>
+// gain access to cout, cin, and hex
+using std::cout;
+using std::cin;
+using std::hex;
+int main () {
+int val;
+cout << "Enter a number: ";
+cin >> val;
+cout << "This is your number: ";
+cout << hex << val;
+return 0;
+}
+```
+
+## Pointers to Functions
+- A confusing yet powerful feature of C++ is the function pointer.
+- A function is not a variable, however, it occupies memory location and thus, can be assigned to a pointer.
+- A function can be called through a pointer, i.e., a function pointer. It also allows functions can be passed as arguments to other functions.
+- Like arrays, the address of a function is obtained by using the function's name without any parentheses or arguments.
+
+```cpp
+#include <stdio.h>
+#include <string.h>
+void check(char *a, char *b, int (*cmp)(const char *, const char *));
+int main (void) {
+char s1[80], s2[80];
+int (*p) (const char *, const char *);
+p = strcmp;
+gets(s1);
+gets(s2);
+check(s1, s2, p);
+return 0;
+}
+void check(char *a, char *b, int (*cmp)(const char *, const char *)) {
+printf("Testing for equality.\n");
+if(!(*cmp)(a, b)) printf("Equal");
+else printf("Not Equal");
+}
+```
+- `(*cmp)(a, b)` calls `strcmp( )`, which is pointed to by cmp, with the arguments a and b. The parentheses around *cmp are necessary. This is one way to call a function through a pointer.
+- Another syntax (less popular) is<br />
+`cmp(a, b);`
+- You can make simple calls without function pointers as<br />
+`check (s1, s2, strcmp);`<br />
+However, at times it is advantageous to pass functions as parameters or to create an array of functions.
+```cpp
+#include <stdio.h>
+#include <ctype.h>
+#include <stdlib.h>
+#include <string.h>
+void check (char *a, char *b,
+int (*cmp) (const char *, const char *));
+int numcmp (const char *a, const char *b);
+int main (void) {
+char s1[80], s2[80];
+gets(s1);
+gets(s2);
+if(isalpha (*s1))
+check (s1, s2, strcmp);
+else
+check (s1, s2, numcmp);
+return 0;
+}
+void check(char *a, char *b,
+int (*cmp)(const char *, const char *))
+{
+printf ("Testing for equality.\n");
+if (!(*cmp)(a, b)) printf("Equal");
+else printf ("Not Equal");
+}
+int numcmp (const char *a, const char *b)
+{
+if (atoi(a)==atoi(b)) return 0;
+else return 1;
+}
+```
+## Pointers to Class Members Or Pointer-to-Member
+- A specific type of pointer that `points to a member of a class`, not to a specific instance of that member in an object.
+- A pointer to a member provides only an offset into an object of the member's class at which that member can be found.
+- As member pointers are not like a normal C++ pointer, the `.` and `–>` cannot be applied to them.
+- To access a member of a class given a pointer to it, you must use the special pointer-to member operators `.*` and `–>*`.
+- In general, pointer-to-member operators are applied in special-case situations and are not used in day-to-day programming.
+```cpp
+#include <iostream>
+using namespace std;
+class cl {
+public:
+cl(int i) {
+val=i;
+}
+int val;
+int double_val() {
+return val+val;
+}
+};
+int main()
+{
+int cl::*data; // data member pointer
+int (cl::*func)(); // function member pointer
+cl ob1(1), ob2(2); // create objects
+//'addresses' are just offsets into an object of type cl
+data = &cl::val; // get offset of val
+func = &cl::double_val; // get offset of double_val()
+cout << "Here are values: ";
+cout << ob1.*data << " " << ob2.*data << "\n";
+cout << "Here they are doubled: ";
+cout << (ob1.*func)() << " "; //see use of extra parentheses
+cout << (ob2.*func)() << "\n";
+return 0;
+}
+```
+
+### Output:
+```
+Here are values: 1 2
+Here they are doubled: 2 4
+
+```
+
+### Remember
+- Use the `.*` operator while accessing a member of an object by using an object or a reference
+- Use the `–>*` operator while using a pointer to the object
+
+```cpp
+#include <iostream>
+using namespace std;
+class cl {
+public:
+cl(int i) {
+val=i;
+}
+int val;
+int double_val() {
+return val+val;
+}
+};
+int main()
+{
+int cl::*data; // data member pointer
+int (cl::*func)(); // function member pointer
+cl ob1(1), ob2(2); // create objects
+cl *p1, *p2;
+p1 = & ob1;
+p2 = & ob2;
+//'addresses' are just offsets into an object of type cl
+data = &cl::val; // get offset of val
+func = &cl::double_val; // get offset of double_val()
+cout << "Here are values: ";
+cout << p1->*data << " " << p2->*data << "\n";
+cout << "Here they are doubled: ";
+cout << (p1->*func)() << " "; //see use of extra parentheses
+cout << (p2->*func)() << "\n";
+return 0;
+```
+-  Pointers to members are different from pointers to specific instances of elements of an object.
+E.g.
+```cpp
+int cl::*d;
+int *p;
+cl o;
+p = &o.val; //This is the address of a specific val
+d = &cl::val; // this is offset of generic val
+```
+<br />
+Here p is a pointer to an integer inside a specific object and
+d is an offset that indicates where val will be found in any object of type cl.
