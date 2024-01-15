@@ -299,3 +299,259 @@ Cats: 4
 Platypuses: 4
 
 ```
+## Mutable
+- Class member functions may be declared as const, which causes this to be treated as a const pointer.
+- A const object may not invoke a non-const member function. However, a const member
+function can be called by either const or non-const objects.
+- The main purpose of declaring a member function as const is to prevent it from modifying the
+object that invokes it.
+- Sometimes, we need const function to modify one or more members, but not all. Mutable overrides constness, i.e., a mutable member can be modified by a const memberfunction.
+
+```cpp
+class Demo {
+mutable int i;
+int j;
+public:
+int geti () const {
+return i; // ok
+}
+void seti (int x) const {
+i = x; // now, OK.
+}
+/* The following function won't compile.
+void setj (int x) const {
+j = x; // Still Wrong!
+}
+*/
+};
+int main()
+{
+Demo ob;
+ob.seti (1900);
+cout << ob.geti();
+return 0;
+}
+```
+### Another Example:
+```cpp
+class scrollbar
+{
+private:
+int size; //related to constness
+mutable string owner; //not relevant to constness
+public:
+scrollbar(int sz, string own) : size(sz), owner(own)
+{ }
+void setSize(int sz) //changes size
+{ size = sz; }
+void setOwner(string own) const //changes owner
+{ owner = own; }
+int getSize() const //returns size
+{ return size; }
+string getOwner() const //returns owner
+{ return owner; }
+};
+int main()
+{
+//create constant object
+const scrollbar obj (60, “Window1”);
+// obj.setSize(100); //Error
+obj.setOwner(“Window2”); //this is OK
+cout << obj.getSize() << “, “ <<
+obj.getOwner() << endl;
+return 0;
+}
+```
+## Explicit Constructors
+- In one argument constructor, use either `obj (x)` or `obj = x` to initialize an object, i.e., there is a conversion from the type of that argument to the type of the class. To avoid automatic conversion, use explicit specifier.
+- The explicit specifier applies only to constructors.
+- Now, only constructors of the following form will be allowed: `myclass ob(4);`
+- `myclass ob = 4; // Not allowed`
+```cpp
+#include <iostream>
+using namespace std;
+class myclass {
+int a;
+public:
+explicit myclass(int x) { a = x; }
+int geta() { return a; }
+};
+```
+
+## Namespace
+- Aim: To localize the visibility of names of identifiers to avoid name collisions.
+- The namespace keyword allows you to partition the global namespace by creating a declarative region.
+- In essence, a namespace defines a scope.
+- Syntax:
+```cpp
+namespace name {
+// declarations
+}
+```
+
+### Example:
+```cpp
+#include <iostream>
+using namespace std;
+namespace CounterNameSpace {
+int upperbound;
+int lowerbound;
+class counter {
+int count;
+public:
+counter(int n) {
+if(n <= upperbound) count = n;
+else count = upperbound;
+}
+void reset(int n) {
+if(n <= upperbound) count = n;
+}
+int run() {
+if(count > lowerbound) return count--;
+else return lowerbound;
+}
+};
+}
+int main() {
+CounterNameSpace::upperbound = 100;
+CounterNameSpace::lowerbound = 0;
+CounterNameSpace::counter ob1(10);
+int i;
+do {
+i = ob1.run();
+cout << i << " ";
+} while(i > CounterNameSpace::lowerbound);
+CounterNameSpace::counter ob2(20);
+do {
+i = ob2.run();
+cout << i << " ";
+} while(i > CounterNameSpace::lowerbound);
+ob2.reset(100);
+CounterNameSpace::lowerbound = 90;
+do {
+i = ob2.run();
+cout << i << " ";
+} while(i > CounterNameSpace::lowerbound);
+return 0; }
+```
+- Observe the declaration of a counter object and the references to upperbound and lowerbound are qualified by CounterNameSpace.
+- However, once an object of type counter has been declared, it is not necessary to further qualify it or any of its members. Thus, ob1.run( ) can be called directly; the namespace has already been resolved.
+
+## using statement
+- Specifying the namespace and the scope resolution operator each time you need to refer to one quickly becomes a tedious chore. The using statement helps in solving it.
+- Syntax: Two forms
+```cpp
+using namespace name; //all members within the namespace are made visible
+using name::member; //a specific member of the namespace is made visible
+```
+- E.g.
+```cpp
+using CounterNameSpace::lowerbound; // only lowerbound is visible
+lowerbound = 10; // No qualification needed as lowerbound is visible now
+using namespace CounterNameSpace; // all members are visible
+upperbound = 100; // OK because all members are now visible
+```
+## Unnamed or Anonymous Namespaces
+- Aim: To create identifiers that are unique within a file.
+- This means unnamed namespaces allow you to establish unique identifiers that are known only within the scope of a single file. This implies members can be referred directly without any qualification within the file.
+- Unnamed namespaces eliminate the need for certain uses of the static storage class modifier. E.g. linking both files, any attempt to use k in File Two will result in an error as there is no definition of k in File Two.
+
+```
+File 1
+static int k;
+void f1(){
+k = 99;//ok
+}
+```
+```
+File 2
+extern int k;
+void f2(){
+k=10;//error
+}
+```
+-  A better way of writing code is to use unnamed namespace rather than static. E.g.
+```
+File 1
+namespcace{
+int k;
+void f1(){
+k = 99;//ok
+}
+```
+```
+File 2
+extern int k;
+void f2(){
+k = 10;//error
+}
+```
+
+## Some Namespace Options
+- There may be more than one namespace declaration of the same name. This allows a namespace to be split over several files or even separated within the same file
+
+```cpp
+#include <iostream>
+using namespace std;
+namespace NS {
+int i;
+}
+// ...
+namespace NS {
+int j;
+}
+int main()
+{
+NS::i = NS::j = 10;
+// refer to NS specifically
+cout << NS::i * NS::j << "\n";
+// use NS namespace
+using namespace NS;
+cout << i * j;
+return 0;
+}
+
+```
+### Output:
+```
+100
+100
+
+```
+
+- A namespace must be declared outside of all other scopes. This means that you cannot declare namespaces that are localized to a function, for example. There is, however, one exception: a namespace can be nested within another.
+```cpp
+#include <iostream>
+using namespace std;
+namespace NS1 {
+int i;
+namespace NS2 { // a nested namespace
+int j;
+}
+}
+int main()
+{
+NS1::i = 19;
+// NS2::j = 10; Error, NS2 is not in view
+NS1::NS2::j = 10; // this is right
+cout << NS1::i << " "<< NS1::NS2::j << "\n";
+// use NS1
+using namespace NS1;
+/* Now that NS1 is in view, NS2 can be used to
+refer to j. */
+cout << i * NS2::j;
+return 0;
+}
+```
+
+### Output:
+```
+19 10
+190
+```
+
+## The std Namespace
+- Standard C++ defines its entire library in its namespace called `std`.<br />
+`using namespace std;`
+This brings the `std` namespace to be brought into the current namespace, which gives you direct access to the
+entire C++ library without having to qualify each one with `std::`.
