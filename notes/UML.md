@@ -204,9 +204,9 @@ A Use-Case Diagram is a type of diagram in Unified Modeling Language (UML) that 
 
 ![image](https://github.com/vansh-seth/Cpp-OOPS/assets/111755254/7369e957-3808-4551-bc22-9f1e4e6856e1)
 
--Inheritance is a required feature of object orientation
--Generalization expresses a parent/child relationship among related classes.
--Used for abstracting details in several layers
+- Inheritance is a required feature of object orientation.<br/>
+- Generalization expresses a parent/child relationship among related classes.<br/>
+- Used for abstracting details in several layers.
 
 - generalization (inheritance) relationships
   - hierarchies drawn top-down with arrows pointing upward to parent
@@ -235,6 +235,7 @@ A Use-Case Diagram is a type of diagram in Unified Modeling Language (UML) that 
     - `3..*` = 3 or more
   2. name (what relationship the objects have)
   3. navigability (direction)
+
 ![image](https://github.com/vansh-seth/Cpp-OOPS/assets/111755254/b774ee52-852a-4199-a141-3dea8c77aac3)
 
 ## Association: Multiplicity and Roles
@@ -244,7 +245,9 @@ A Use-Case Diagram is a type of diagram in Unified Modeling Language (UML) that 
 ## Multiplicity of associations
 - one-to-one
   - each student must carry exactly one ID card
+
 ![image](https://github.com/vansh-seth/Cpp-OOPS/assets/111755254/d50f40f5-56df-4bce-a912-e0c14106e514)
+
 - one-to-many
   - one rectangle list can contain many rectangles
 
