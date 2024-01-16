@@ -1,10 +1,10 @@
 # Additional Features in C++ 
 ## Run-Time Type Identification (RTTI)
-- In nonpolymorphic languages there is no need for RTTI because the type of each object is
+- In nonpolymorphic languages, there is no need for RTTI because the type of each object is
 known at compile time
 - In C++, there are situations when the precise nature of that object is not determined until the
 program is executed.
-- base-class pointers may be used to point to objects of the base class or any object derived
+- base-class pointers may be used to point to objects of the base class or any object-derived
 from that base.
 - It is not always possible to know in advance what type of object will be pointed to by a base
 pointer at any given moment in time. | Need for RTTI
@@ -12,10 +12,10 @@ pointer at any given moment in time. | Need for RTTI
 ### Syntax:
 
 - Include the header `<typeinfo>`
-- Use typeid to know object type.
+- Use `typeid` to know object type.
 - Syntax
 `typeid(object)`
-- where object is the object whose type (built in or class type) you will be obtaining it returns a
+- where the object is the object whose type (built-in or class type) you will be obtaining it returns a
 reference to an object of type type_info that describes the type of object.
 - The type_info class defines the following public members:
 ```
@@ -80,8 +80,8 @@ ob1 and ob2 are of differing types
 
 ```
 ### Another Example
-The most important use of typeid occurs when it is applied through a pointer of a polymorphic base class.
-Here it will automatically return the type of the actual object being pointed to, which may be a base-class
+The most important use of `typeid` occurs when it is applied through a pointer of a polymorphic base class.
+Here it will automatically return the type of the actual object being pointed to, which may be a base class
 object or an object derived from that base. 
 ```cpp
 #include <iostream>
@@ -127,7 +127,7 @@ p is pointing to an object of type class Cat
 p is pointing to an object of type class Platypus
 
 ```
-Removing virtual keyword will result in following output:
+Removing `virtual` keyword will result in the following output:
 ```
 p is pointing to an object of type class Mammal
 p is pointing to an object of type class Mammal
@@ -135,7 +135,7 @@ p is pointing to an object of type class Mammal
 
 ```
 ## typeid Can Be Applied to Template Classes
-Even though two objects are of the same template class type, if their parameterized data does not
+Even though two objects are of the same template class type if their parameterized data does not
 match, they are not equivalent types.
 
 ```cpp
@@ -182,7 +182,7 @@ o1 and o3 are different types
 ## Applying typeid to object reference
 
 - References to an object of a polymorphic class hierarchy work the same as pointers.
-- When typeid is applied to a reference to an object of a polymorphic class, it will return the type of the object actually being referred to, which may be of a derived type.
+- When `typeid` is applied to a reference to an object of a polymorphic class, it will return the type of the object being referred to, which may be of a derived type.
 - A common use of this feature is when objects are passed to functions by reference.
 
 ## Example:
@@ -305,7 +305,7 @@ Platypuses: 4
 function can be called by either const or non-const objects.
 - The main purpose of declaring a member function as const is to prevent it from modifying the
 object that invokes it.
-- Sometimes, we need const function to modify one or more members, but not all. Mutable overrides constness, i.e., a mutable member can be modified by a const memberfunction.
+- Sometimes, we need `const` function to modify one or more members, but not all. Mutable overrides constness, i.e., a mutable member can be modified by a const `memberfunction`.
 
 ```cpp
 class Demo {
@@ -363,7 +363,7 @@ return 0;
 }
 ```
 ## Explicit Constructors
-- In one argument constructor, use either `obj (x)` or `obj = x` to initialize an object, i.e., there is a conversion from the type of that argument to the type of the class. To avoid automatic conversion, use explicit specifier.
+- In one argument constructor, use either `obj (x)` or `obj = x` to initialize an object, i.e., there is a conversion from the type of that argument to the type of the class. To avoid automatic conversion, use an explicit specifier.
 - The explicit specifier applies only to constructors.
 - Now, only constructors of the following form will be allowed: `myclass ob(4);`
 - `myclass ob = 4; // Not allowed`
@@ -434,7 +434,7 @@ cout << i << " ";
 } while(i > CounterNameSpace::lowerbound);
 return 0; }
 ```
-- Observe the declaration of a counter object and the references to upperbound and lowerbound are qualified by CounterNameSpace.
+- Observe the declaration of a counter object and the references to `upperbound` and `lowerbound` are qualified by CounterNameSpace.
 - However, once an object of type counter has been declared, it is not necessary to further qualify it or any of its members. Thus, ob1.run( ) can be called directly; the namespace has already been resolved.
 
 ## using statement
@@ -554,7 +554,7 @@ return 0;
 - Standard C++ defines its entire library in its namespace called `std`.<br />
 `using namespace std;`<br />
 This brings the `std` namespace to be brought into the current namespace, which gives you direct access to the entire C++ library without having to qualify each one with `std::`.
-- If there are limited references to C++ library, explicitly qualify each name with `std::`
+- If there are limited references to the C++ library, explicitly qualify each name with `std::`
 ```cpp
 #include <iostream>
 int main () {
