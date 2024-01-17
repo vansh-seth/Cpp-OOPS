@@ -6,11 +6,11 @@ The old class is referred to as the base class, and the new classes, which are i
 
 ![image](https://github.com/vansh-seth/Cpp-OOPS/assets/111755254/1dfa78c7-45a8-417a-b464-1444dfe2bb18)
 
-- In above figure, the class B contains the three member i.e. Property1, Property2 and Property3.
-- The second class named as D contains four members i.e. Property1, Property2, Property3 and Property4.
-- Out of these, three members (Property1, Property2, Property3) of the class D are same as that of class B, while the one member i.e. Property4 is unique.
-- In the class D, instead of defining all the three members again, one can reuse them from the class B. This feature is known as
-inheritance which saves time, space, money and increases the reliability and efficiency.
+- In the above figure, class B contains the three members i.e. Property1, Property2, and Property3.
+- The second class named as D contains four members i.e. Property1, Property2, Property3, and Property4.
+- Out of these, three members (Property1, Property2, Property3) of class D are the same as that of class B, while one member i.e. Property4 is unique.
+- In class D, instead of defining all three members again, one can reuse them from class B. This feature is known as
+inheritance which saves time, space, and money and increases reliability and efficiency.
 
 ## Types of Inheritance
 
@@ -59,7 +59,7 @@ class D : public B {
 };
 ```
 
-This program illustrates the use of single inheritance where class `D` is publicly inherited from the base class `B`.
+This program illustrates the use of single inheritance where the class `D` is publicly inherited from the base class `B`.
 
 ### Example: 
 ```cpp
@@ -463,7 +463,7 @@ c.Display_data( );
 
 ## Multiple Inheritance
 - When a class is inherited from more than one base class, it is known as multiple inheritance.
-- The syntax for defining a subclass, which is inheriting more than one classes is:
+- The syntax for defining a subclass, which inherits more than one class is:
  ```cpp
 class Subclass : access_specifier Baseclass1,
  access_specifier Baseclass2, ………
@@ -477,7 +477,7 @@ members of the derived class ;
 ![image](https://github.com/vansh-seth/Cpp-OOPS/assets/111755254/bf02c56b-96f1-45b3-908f-57bbf96514a0)
 
 - In the above figure, Circle and Rectangle are two base classes from which the class Cylinder is being inherited.
-- The data members of both the base classes are declared in protected mode. Thus, the class Cylinder can access the data member radius of class Circle and data member length, breadth of the class Rectangle, but the objects of the class Cylinder cannot access these protected data members.
+- The data members of both the base classes are declared in protected mode. Thus, the class Cylinder can access the data member radius of the class Circle and data member length, and breadth of the class Rectangle, but the objects of the class Cylinder cannot access these protected data members.
 - The volume of the cylinder is equal to 22/7*(radius*radius*length). Thus, instead of defining these data again, they can be inherited from the base classes Circle and Rectangle ( radius from class Circle and length from class Rectangle ).
 
 - ## Example:
@@ -548,9 +548,9 @@ turn can further be inherited by another and so on.
 ![image](https://github.com/vansh-seth/Cpp-OOPS/assets/111755254/25598ec1-fb58-4a0c-9c7c-baa0926994ee)
 
 In the above figure, class B represents the base class. The class D1
-that is called first level of inheritance, inherits the class B. The
+that is called the first level of inheritance, inherits the class B. The
 derived class D1 is further inherited by the class D2, which is
-called second level of inheritance.
+called the second level of inheritance.
 
 ## Example
 ```cpp
